@@ -1,1 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.icon-right-5{
+    margin-right: 5px;
+} 
+.mat-header-cell {
+    color: #fff !important;
+  }
+
+  .mat-header-row {
+    background-color: #333 !important;
+  }
+
+  .mat-header-cell {
+    font-size: 14px !important;
+  }
+
+  .mat-paginator,
+  .mat-paginator-page-size .mat-select-trigger {
+    color: #333 !important;
+  }
+  .display-4 {
+    font-size: 2rem;
+  }
+  .active-route{
+    text-decoration: underline;
+  }
+  .page-header{
+    font-size:18px;
+    font-weight: 500;
+  }
+  .margin-bottom-btn{
+    margin-bottom: 5%;
+  }
+  .txt-info{
+    color:rgb(17, 85, 204);
+    font-weight: 500;
+  }
+  .item-card {
+    border:1px solid #ccc; 
+    /* border:0.5px solid #80bdff; 
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);  */
+    max-width: 150px;
+    /* color: #495057; */
+    /* background-color: #fff;
+    border-color: #80bdff;
+    outline: 0; */
+}
+.item-card:hover{
+  /* border-color: #80bdff; */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  outline: 0;
+}

@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Are you sure?</h2>
+<mat-dialog-content>Item will be deleted</mat-dialog-content>
+<mat-dialog-actions>
+    <!-- <a class="btn btn-sm btn-danger text-white" style="margin-left: 5px;">Yes</a>
+    <a class="btn btn-sm text-white btn-dark" style="margin-left: 5px;">No</a> -->
+    <button mat-flat-button color="warn" mat-dialog-close (click)="deleteItem()">Yes</button>
+    <button mat-flat-button mat-dialog-close>No</button>
+</mat-dialog-actions>

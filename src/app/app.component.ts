@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OrderService } from './shared/orderservice.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'BillingPOS';
+  constructor(public service:OrderService){}
 }

@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>View Kitchen Order Details</h2>
+<mat-dialog-content>
+    <div class="mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort>
+            <!-- Position Column -->
+            <ng-container matColumnDef="TableNumber">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> Table Number </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.TableNumber}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="CustomerName">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> Customer Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.CustomerName}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="CustomerNumber">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> Customer Number </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.CustomerNumber}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="GrandTotal">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> Grand Total </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.GrandTotal}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell mat-sort-header *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a class="btn btn-sm btn-success text-white" (click)="addKitchenOrder(element)">
+                        <i class="fa fa-plus-square icon-right-5"></i>Add Order</a>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5,10,20]"></mat-paginator>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="btn btn-dark ml-1" type="button" mat-dialog-close>Close</button>
+</mat-dialog-actions>

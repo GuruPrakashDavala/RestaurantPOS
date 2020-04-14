@@ -1,0 +1,47 @@
+<!-- <h4 class="display-4">Order Food Item</h4> -->
+<h4>Update Food Item</h4>
+<hr>
+<form #form="ngForm" autocomplete="off">
+    <!-- <div class="form-group">
+        <label>Food Item</label>
+        <select name="ItemId" #ItemId="ngModel" [(ngModel)]="ItemIdTxt" type="text" class="form-control"
+            (change)="getPrice(ItemIdTxt)" [disabled]="orderService.isEditItem">
+            <option value="0">--Select--</option>
+            <option *ngFor="let item of itemList" value="{{item.itemId}}">{{item.Name}}</option>
+        </select>
+    </div> -->
+    <div class="form-group">
+        <label>Food Item</label>
+        <div class="input-group">
+            <input name="ItemName" #ItemName="ngModel" [(ngModel)]="ItemNameTxt" type="text" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Price</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                </div>
+                <input name="Price" #Price="ngModel" [(ngModel)]="PriceTxt" type="text" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Quantity</label>
+            <div class="input-group">
+                <input name="Quantity" #Quantity="ngModel" [(ngModel)]="QuantityTxt" type="text" class="form-control"
+                    (change)="updatePrice(QuantityTxt)">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Total</label>
+        <div class="input-group">
+            <input name="Total" #Total="ngModel" [(ngModel)]="TotalTxt" type="text" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" type="submit" (click)="updateItem()">Submit</button>
+        <button class="btn btn-dark ml-1" type="button" (click)="closeModal()">Close</button>
+    </div>
+</form>

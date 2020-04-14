@@ -1,0 +1,91 @@
+<h4>All Orders:</h4>
+<mat-form-field *ngIf="service.allOrders.length > 0">
+  <input matInput type="text" placeholder="Search Orders" (keyup)="applyFilter($event.target.value)">
+</mat-form-field>
+<h3 *ngIf="service.allOrders.length == 0" align="center">No Orders Found</h3>
+<div class="mat-elevation-z8" *ngIf="service.allOrders.length > 0">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="OrderNo">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Order.No</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span align="center">{{element.OrderNo}} </span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="CustomerName">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.CustomerName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="CustomerNumber">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Number</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.CustomerNumber}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="GrandTotal">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Grand Total</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="text-align: center !important;"> 
+        {{element.GrandTotal}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="PaymentMethod">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Payment</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.PaymentMethod}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="TotalCash">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Paid</mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span *ngIf="element.TotalCash">{{element.TotalCash}} </span>
+        <span *ngIf="!element.TotalCash">-</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="RemainingCash">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Remaining</mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span *ngIf="element.RemainingCash">
+          {{element.RemainingCash}} 
+        </span>
+       <span *ngIf="!element.RemainingCash">-</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="CardNumber">
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Card Number</mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span *ngIf="element.CardNumber">{{element.CardNumber}} </span>
+        <span *ngIf="!element.CardNumber">-</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Date">
+      <mat-header-cell mat-sort-header *matHeaderCellDef> Date </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.Date | date }} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="vieworder">
+      <mat-header-cell *matHeaderCellDef> View Order Details </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+       
+        <a class="btn btn-sm btn-info text-white" (click)="vieworder(element.orderHistory)"> <i
+            class="fa fa-eye"></i></a>
+        
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5,10,20]"></mat-paginator>
+</div>
+<style>
+  .mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content:center;
+}
+</style>

@@ -1,0 +1,61 @@
+<h4>Order Food Item</h4>
+<hr>
+<div class="form-group">
+    <select name="ItemId" type="text" class="form-control" [(ngModel)]="selectedValue"
+        (change)="filterItems(selectedValue)">
+        <option value="0">--All Items--</option>
+        <option value="1">Break Fast</option>
+        <option value="2">Lunch</option>
+        <option value="3">Snacks</option>
+    </select>
+</div>
+<div class="form-group">
+    <div class="input-group">
+        <input name="SearchItems" placeholder="Search Items" type="text" (keyup)="applyFilter($event.target.value)"
+            class="form-control">
+    </div>
+</div>
+<!-- <span>{{itemIdTxt}}</span> -->
+<div class="col-md-12 max-list-height">
+    <!-- <mat-form-field class="example-full-width">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field> -->
+    <!-- let user of this.dataSource.filteredData -->
+    <div class="col-md-3 inline-view" *ngFor="let item of this.dataSource.filteredData;let i=index; let last = last"
+        [class.last-item]="last">
+        <mat-card class="item-card list-card">
+            <mat-card-header>
+                <mat-card-title>{{item.itemName}}</mat-card-title>
+                <mat-card-subtitle>Price : {{item.Price}} Quantity : 1
+                    <!-- <span>In-Cart - 2</span> -->
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions align="center" *ngIf="!isKitchenOrders">
+                <a [hidden]="orderService.orderItems.length > 0 && checkIfItemExists(item)"
+                    class="btn btn-sm btn-info text-white" (click)="saveItem(item)">
+                    <i class="fa fa-plus-square icon-right-5"></i>Add Item</a>
+                <a [hidden]="orderService.orderItems.length == 0" *ngIf="checkIfItemExists(item)"
+                    class="btn btn-sm btn-success text-white" (click)="saveItem(item)">
+                    <i class="fa fa-plus-square icon-right-5"></i>In-Cart - {{getQuantity(item)}}</a>
+            </mat-card-actions>
+            <mat-card-actions align="center" *ngIf="isKitchenOrders">
+                <a [hidden]="orderService.kitchenOrders.length > 0 && checkIfItemExists(item)"
+                    class="btn btn-sm btn-info text-white" (click)="saveItem(item)">
+                    <i class="fa fa-plus-square icon-right-5"></i>Add Item</a>
+                <a [hidden]="orderService.kitchenOrders.length == 0" *ngIf="checkIfItemExists(item)"
+                    class="btn btn-sm btn-success text-white" (click)="saveItem(item)">
+                    <i class="fa fa-plus-square icon-right-5"></i>In-Cart - {{getQuantity(item)}}</a>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+<br />
+<div class="form-group">
+    <button class="btn btn-dark ml-1" type="button" mat-dialog-close>Close</button>
+</div>
+<style>
+    .list-card {
+        margin-top: 10px;
+        cursor: pointer;
+    }
+</style>

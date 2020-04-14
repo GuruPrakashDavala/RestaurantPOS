@@ -1,0 +1,138 @@
+<h3 class="display-4 text-center app-heading"><img src="/assets/images/food.png">Quick Billing</h3>
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form.value); ">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Order No</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input name="ÖrderNo" #ÖrderNo="ngModel" [(ngModel)]="service.OrderNoTxt" type="text" class="form-control"
+                        readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Customer Number</label>
+                <div class="input-group">
+                    <input name="CustomerNumber" [class.is-invalid]="CustomerNumber.touched && CustomerNumber.invalid" #CustomerNumber="ngModel" [(ngModel)]="service.CustomerNumberTxt" type="text"
+                        class="form-control" required>
+                </div>
+                <small class="text-danger" [class.d-none]="CustomerNumber.valid || CustomerNumber.untouched">Customer Number is required</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Customer Name</label>
+                <div class="input-group">
+                    <input name="CustomerName" #CustomerName="ngModel" [class.is-invalid]="CustomerName.touched && CustomerName.invalid" [(ngModel)]="service.CustomerNameTxt" type="text"
+                        class="form-control" required>
+                </div>
+                <small class="text-danger" [class.d-none]="CustomerName.valid || CustomerName.untouched">Name is required</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Grand Total</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input name="GrandTotal" #GrandTotal="ngModel" [(ngModel)]="service.grandTotal" type="text"
+                        class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select name="PaymentMethod" #PaymentMethod="ngModel" [(ngModel)]="PaymentMethodTxt" type="text"
+                    class="form-control" required [class.is-invalid]="PaymentMethod.touched && PaymentMethod.invalid">
+                    <option value="">--Select--</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                </select>
+                <small class="text-danger" [class.d-none]="PaymentMethod.valid || PaymentMethod.untouched">Payment is required</small>
+            </div>
+        </div>
+        <div class="col-md-2" *ngIf="PaymentMethodTxt=='Cash'">
+            <div class="form-group">
+                <label>Total Cash</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input name="TotalCash" #TotalCash="ngModel" [(ngModel)]="TotalCashTxt" type="text"
+                        class="form-control" (change)="calculateRemaining()" required>
+                </div>
+                <small class="text-danger" [class.d-none]="TotalCash.valid || TotalCash.untouched">Cash is required</small>
+                <small class="text-danger" [class.d-none]="TotalCash.invalid" *ngIf="TotalCashTxt < service.grandTotal">Less than Gtotal</small>
+            </div>
+        </div>
+        <div class="col-md-2" *ngIf="PaymentMethodTxt=='Cash'">
+            <div class="form-group">
+                <label>Remaining Cash</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input name="RemainingCash" #RemainingCash="ngModel" [(ngModel)]="RemainingCashTxt" type="text"
+                        class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" *ngIf="PaymentMethodTxt=='Card'">
+            <div class="form-group">
+                <label>Card Number</label>
+                <div class="input-group">
+                    <input name="PaymentCard" #PaymentCard="ngModel" [(ngModel)]="PaymentCardTxt" type="text"
+                        class="form-control" required>
+                </div>
+                <small class="text-danger" [class.d-none]="PaymentCard.valid || PaymentCard.untouched">Card Number is required</small>
+            </div>
+        </div>
+    </div>
+    <!-- order items table -->
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <th>S.No</th>
+            <th>Food</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th><a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem('')">
+                    <i class="fa fa-plus-square icon-right-5"></i>Add Item</a>
+                    <a *ngIf="checkIfExists()" class="btn btn-sm btn-dark text-white left-10" [matBadge]="filterOrderNumbers.length" matBadgeColor="warn" (click)="openKitchenOrders()">
+                        <i class="fa fa-plus-square icon-right-5"></i>Kitchen Orders</a></th>
+        </thead>
+        <tbody>
+            <tr *ngIf="service.orderItems.length == 0">
+                <td class="font-italic text-center" colspan="6">
+                    No Food item selected for this order.
+                </td>
+            </tr>
+            <tr *ngFor="let item of service.orderItems;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.itemName}}</td>
+                <td>{{item.Price}}</td>
+                <td>{{item.Quantity}}</td>
+                <td>{{item.Total}}</td>
+                <td>
+                    <!-- <button mat-raised-button color="primary" (click)="AddOrEditOrderItem(item)">
+                        <i class="fa fa-edit icon-right-5"></i>Edit</button> -->
+                    <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(item)">
+                        <i class="fa fa-edit icon-right-5"></i> Edit</a>
+                    <!-- <button mat-raised-button color="warn" (click)="DeleteItem(i)">
+                            <i class="fa fa-trash icon-right-5"></i>Delete</button> -->
+                    <a class="btn btn-sm btn-danger text-white" style="margin-left: 5px;" (click)="DeleteItem(i)">
+                        <i class="fa fa-trash icon-right-5"></i>Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group margin-bottom-btn">
+        <button [disabled]="form.form.invalid" class="btn  btn-success" type="submit">Submit</button>
+    </div>
+</form>

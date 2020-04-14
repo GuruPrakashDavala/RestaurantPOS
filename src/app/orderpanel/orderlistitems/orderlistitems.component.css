@@ -1,0 +1,29 @@
+.example-card {
+    min-width: 100%;
+    margin: 40px;
+
+}
+.cards {
+    width: 400px;
+}
+.inline-view{
+    display: inline-block;
+}
+.max-list-height{
+    min-height: 200px;
+    max-height: 250px;
+    overflow-y: auto;
+    /* border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); */
+ border-radius: 10px; 
+}
+.last-item{
+    margin-bottom: 10px;
+}
+.card-title{
+    color:#809785;
+}
+.mat-card-subtitle {
+    color:rgba(0,0,0,.87);
+    font-weight: 300;
+}

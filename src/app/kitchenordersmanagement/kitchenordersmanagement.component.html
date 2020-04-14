@@ -1,0 +1,82 @@
+<h3 class="display-4 text-center app-heading"><img src="/assets/images/food.png">Kitchen Orders</h3>
+<form #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit(form.value); ">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Table.No</label>
+                <select name="tablenumber" #tablenumber="ngModel" [(ngModel)]="tablenumberTxt" type="text"
+                    class="form-control" required [class.is-invalid]="tablenumber.touched && tablenumber.invalid">
+                    <option value="">--Select--</option>
+                    <option value="1">Table 1</option>
+                    <option value="2">Table 2</option>
+                </select>
+                <small class="text-danger" [class.d-none]="tablenumber.valid || tablenumber.untouched">Table No is
+                    required</small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Customer Number</label>
+                <div class="input-group">
+                    <input name="CustomerNumber" [class.is-invalid]="CustomerNumber.touched && CustomerNumber.invalid"
+                        #CustomerNumber="ngModel" [(ngModel)]="CustomerNumberTxt" type="text" class="form-control"
+                        required>
+                </div>
+                <small class="text-danger" [class.d-none]="CustomerNumber.valid || CustomerNumber.untouched">Customer
+                    Number is required</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Customer Name</label>
+                <div class="input-group">
+                    <input name="CustomerName" #CustomerName="ngModel"
+                        [class.is-invalid]="CustomerName.touched && CustomerName.invalid" [(ngModel)]="CustomerNameTxt"
+                        type="text" class="form-control" required>
+                </div>
+                <small class="text-danger" [class.d-none]="CustomerName.valid || CustomerName.untouched">Name is
+                    required</small>
+            </div>
+        </div>
+    </div>
+    <!-- order items table -->
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <th>S.No</th>
+            <th>Food</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th><a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem('')">
+                    <i class="fa fa-plus-square icon-right-5"></i>Add Item</a></th>
+        </thead>
+        <tbody>
+            <tr *ngIf="orderItems.length==0">
+                <td class="font-italic text-center" colspan="6">
+                    No Food item selected for this order.
+                </td>
+            </tr>
+            <tr *ngFor="let item of orderItems;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.itemName}}</td>
+                <td>{{item.Price}}</td>
+                <td>{{item.Quantity}}</td>
+                <td>{{item.Total}}</td>
+                <td>
+                    <!-- <button mat-raised-button color="primary" (click)="AddOrEditOrderItem(item)">
+                        <i class="fa fa-edit icon-right-5"></i>Edit</button> -->
+                    <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(item)">
+                        <i class="fa fa-edit icon-right-5"></i> Edit</a>
+                    <!-- <button mat-raised-button color="warn" (click)="DeleteItem(i)">
+                            <i class="fa fa-trash icon-right-5"></i>Delete</button> -->
+                    <a class="btn btn-sm btn-danger text-white" style="margin-left: 5px;" (click)="DeleteItem(i)">
+                        <i class="fa fa-trash icon-right-5"></i>Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group margin-bottom-btn">
+        <button [disabled]="form.form.invalid" class="btn  btn-success" type="submit">Submit</button>
+    </div>
+</form>
